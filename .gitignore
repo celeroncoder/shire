@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out/
+build/
+*.tsbuildinfo
+
+# Turborepo
+.turbo/
+
+# Electron
+release/
+*.dmg
+*.AppImage
+*.exe
+*.snap
+*.deb
+*.rpm
+
+# Database
+*.db
+*.db-journal
+*.db-wal
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+._*
+
+# IDE
+.vscode/
+.idea/

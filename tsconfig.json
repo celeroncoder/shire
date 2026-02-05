@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "packages/db" },
+    { "path": "packages/tools" },
+    { "path": "apps/desktop" }
+  ]
+}
