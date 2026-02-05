@@ -1,10 +1,17 @@
 import { app, shell, BrowserWindow } from "electron";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { is } from "@electron-toolkit/utils";
 import { createDatabase } from "@shire/db";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const migrationsFolder = is.dev
+  ? resolve(__dirname, "../../../../packages/db/src/migrations")
+  : join(process.resourcesPath, "migrations");
+
 const dbPath = join(app.getPath("userData"), "shire.db");
-const db = createDatabase(dbPath);
+const db = createDatabase(dbPath, migrationsFolder);
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({

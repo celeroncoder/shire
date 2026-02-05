@@ -13,6 +13,10 @@ extraResources:
     to: ripgrep-bin/
     filter:
       - '**/*'
+  - from: ../../packages/db/src/migrations/
+    to: migrations/
+    filter:
+      - '**/*'
 mac:
   target:
     - dmg
