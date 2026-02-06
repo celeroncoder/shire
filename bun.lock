@@ -18,6 +18,7 @@
         "@electron-toolkit/utils": "^4.0.0",
         "@shire/db": "workspace:*",
         "@shire/tools": "workspace:*",
+        "@vscode/ripgrep": "^1.17.0",
         "ai": "^4.2.0",
         "better-sqlite3": "^11.8.0",
         "clsx": "^2.1.1",
