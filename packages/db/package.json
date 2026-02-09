@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
-    "./schema": "./dist/schema.js"
+    "./schema": "./dist/schema.js",
+    "./types": "./dist/types.js"
   },
   "scripts": {
     "build": "tsc",

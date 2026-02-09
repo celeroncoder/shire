@@ -6,9 +6,19 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin({ exclude: ["@shire/db", "@shire/tools"] })],
+    build: {
+      rollupOptions: {
+        external: ["@vscode/ripgrep"],
+      },
+    },
   },
   preload: {
     plugins: [externalizeDepsPlugin({ exclude: ["@shire/db", "@shire/tools"] })],
+    build: {
+      rollupOptions: {
+        external: ["@vscode/ripgrep"],
+      },
+    },
   },
   renderer: {
     resolve: {

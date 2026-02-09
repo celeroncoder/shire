@@ -23,3 +23,6 @@ export function createDatabase(
 
 export * from "./schema.js";
 export { schema };
+export { createService } from "./service.js";
+export type { ShireService } from "./service.js";
+export * from "./types.js";
