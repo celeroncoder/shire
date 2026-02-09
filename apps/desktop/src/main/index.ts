@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from "electron";
+import { app, shell, BrowserWindow, ipcMain, dialog, Menu } from "electron";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { is } from "@electron-toolkit/utils";
@@ -125,6 +125,53 @@ function normalizeErrorMessage(error: unknown): string {
 }
 
 function registerIpcHandlers(): void {
+  // Workspace CRUD
+  ipcMain.handle("workspace:list", () => service.workspace.list());
+  ipcMain.handle("workspace:create", (_event, args: { name: string; path: string }) =>
+    service.workspace.create(args)
+  );
+  ipcMain.handle("workspace:update", (_event, args: { id: string; name: string }) =>
+    service.workspace.update(args)
+  );
+  ipcMain.handle("workspace:delete", (_event, args: { id: string }) =>
+    service.workspace.delete(args.id)
+  );
+
+  // Session CRUD
+  ipcMain.handle("session:list", (_event, args: { workspaceId: string }) =>
+    service.session.listByWorkspace(args.workspaceId)
+  );
+  ipcMain.handle("session:create", (_event, args: { workspaceId: string; title?: string }) =>
+    service.session.create(args)
+  );
+  ipcMain.handle("session:rename", (_event, args: { id: string; title: string }) =>
+    service.session.rename(args)
+  );
+  ipcMain.handle("session:delete", (_event, args: { id: string }) =>
+    service.session.delete(args.id)
+  );
+
+  // Chat history
+  ipcMain.handle("chat:history", (_event, args: { sessionId: string }) =>
+    service.message.listBySession(args.sessionId)
+  );
+
+  // Artifacts
+  ipcMain.handle("artifact:list", (_event, args: { sessionId: string }) =>
+    service.artifact.listBySession(args.sessionId)
+  );
+
+  // Settings
+  ipcMain.handle("settings:get-all", () => service.settings.getAll());
+  ipcMain.handle("settings:set", (_event, args: { settings: Record<string, string | null> }) =>
+    service.settings.setMany(args.settings)
+  );
+
+  // Native dialogs
+  ipcMain.handle("dialog:open-folder", async () => {
+    return dialog.showOpenDialog({ properties: ["openDirectory"] });
+  });
+
   ipcMain.handle("chat:send", async (event, rawArgs) => {
     const { sessionId, content } = chatSendSchema.parse(rawArgs);
     const session = service.session.getById(sessionId);
@@ -287,6 +334,143 @@ function registerIpcHandlers(): void {
   });
 }
 
+function sendToFocusedWindow(channel: string, ...args: unknown[]): void {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+    win.webContents.send(channel, ...args);
+  }
+}
+
+function buildMenu(): void {
+  const isMac = process.platform === "darwin";
+
+  const template: Electron.MenuItemConstructorOptions[] = [
+    // App menu (macOS only)
+    ...(isMac
+      ? [
+          {
+            label: app.name,
+            submenu: [
+              { role: "about" as const },
+              { type: "separator" as const },
+              {
+                label: "Settings\u2026",
+                accelerator: "CmdOrCtrl+,",
+                click: () => sendToFocusedWindow("menu:open-settings"),
+              },
+              { type: "separator" as const },
+              { role: "services" as const },
+              { type: "separator" as const },
+              { role: "hide" as const },
+              { role: "hideOthers" as const },
+              { role: "unhide" as const },
+              { type: "separator" as const },
+              { role: "quit" as const },
+            ],
+          } satisfies Electron.MenuItemConstructorOptions,
+        ]
+      : []),
+
+    // File menu
+    {
+      label: "File",
+      submenu: [
+        {
+          label: "New Session",
+          accelerator: "CmdOrCtrl+N",
+          click: () => sendToFocusedWindow("menu:new-session"),
+        },
+        {
+          label: "New Workspace\u2026",
+          accelerator: "CmdOrCtrl+Shift+N",
+          click: () => sendToFocusedWindow("menu:new-workspace"),
+        },
+        { type: "separator" },
+        isMac ? { role: "close" } : { role: "quit" },
+      ],
+    },
+
+    // Edit menu
+    {
+      label: "Edit",
+      submenu: [
+        { role: "undo" },
+        { role: "redo" },
+        { type: "separator" },
+        { role: "cut" },
+        { role: "copy" },
+        { role: "paste" },
+        ...(isMac
+          ? [
+              { role: "pasteAndMatchStyle" as const },
+              { role: "delete" as const },
+              { role: "selectAll" as const },
+              { type: "separator" as const },
+              {
+                label: "Speech",
+                submenu: [
+                  { role: "startSpeaking" as const },
+                  { role: "stopSpeaking" as const },
+                ],
+              },
+            ]
+          : [
+              { role: "delete" as const },
+              { type: "separator" as const },
+              { role: "selectAll" as const },
+            ]),
+      ],
+    },
+
+    // View menu
+    {
+      label: "View",
+      submenu: [
+        { role: "reload" },
+        { role: "forceReload" },
+        { role: "toggleDevTools" },
+        { type: "separator" },
+        { role: "resetZoom" },
+        { role: "zoomIn" },
+        { role: "zoomOut" },
+        { type: "separator" },
+        { role: "togglefullscreen" },
+      ],
+    },
+
+    // Window menu
+    {
+      label: "Window",
+      submenu: [
+        { role: "minimize" },
+        { role: "zoom" },
+        ...(isMac
+          ? [
+              { type: "separator" as const },
+              { role: "front" as const },
+              { type: "separator" as const },
+              { role: "window" as const },
+            ]
+          : [{ role: "close" as const }]),
+      ],
+    },
+
+    // Help menu
+    {
+      role: "help",
+      submenu: [
+        {
+          label: "Learn More",
+          click: () => shell.openExternal("https://github.com"),
+        },
+      ],
+    },
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 1200,
@@ -298,7 +482,7 @@ function createWindow(): void {
     vibrancy: "sidebar",
     trafficLightPosition: { x: 16, y: 16 },
     webPreferences: {
-      preload: join(__dirname, "../preload/index.js"),
+      preload: join(__dirname, "../preload/index.mjs"),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: false,
@@ -307,6 +491,9 @@ function createWindow(): void {
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
+    if (is.dev) {
+      mainWindow.webContents.openDevTools({ mode: "detach" });
+    }
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -322,6 +509,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
+  buildMenu();
   registerIpcHandlers();
   createWindow();
 
