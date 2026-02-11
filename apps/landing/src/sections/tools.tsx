@@ -4,40 +4,54 @@ import {
   Search,
   FileText,
   Pencil,
-  FolderTree,
+  Terminal,
   FileSearch,
+  Globe,
+  GitBranch,
 } from 'lucide-react'
 
 const tools = [
   {
-    name: 'glob',
+    name: 'Read',
+    icon: FileText,
+    description: 'Read file contents with line ranges and image support',
+    params: 'file_path, offset?, limit?',
+  },
+  {
+    name: 'Edit',
+    icon: Pencil,
+    description: 'Precise string replacements in existing files',
+    params: 'file_path, old_string, new_string',
+  },
+  {
+    name: 'Bash',
+    icon: Terminal,
+    description: 'Execute shell commands — git, npm, builds, and more',
+    params: 'command, timeout?',
+  },
+  {
+    name: 'Glob',
     icon: Search,
-    description: 'Find files matching a glob pattern',
+    description: 'Fast file pattern matching across any codebase size',
     params: 'pattern, path?',
   },
   {
-    name: 'ripgrep',
+    name: 'Grep',
     icon: FileSearch,
-    description: 'Regex search across workspace file contents',
-    params: 'pattern, glob?, maxResults?',
+    description: 'Regex search powered by ripgrep with full syntax support',
+    params: 'pattern, path?, glob?',
   },
   {
-    name: 'read_file',
-    icon: FileText,
-    description: 'Read file contents — full or by line range',
-    params: 'path, startLine?, endLine?',
+    name: 'WebSearch',
+    icon: Globe,
+    description: 'Search the web for up-to-date information and docs',
+    params: 'query',
   },
   {
-    name: 'write_file',
-    icon: Pencil,
-    description: 'Create or overwrite a file in the workspace',
-    params: 'path, content',
-  },
-  {
-    name: 'list_dir',
-    icon: FolderTree,
-    description: 'List directory entries with metadata',
-    params: 'path?',
+    name: 'Task',
+    icon: GitBranch,
+    description: 'Launch specialized agents for parallel multi-step work',
+    params: 'prompt, subagent_type',
   },
 ]
 
@@ -56,31 +70,31 @@ export function Tools() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <h2 className="font-display text-4xl md:text-6xl text-white mb-6 leading-[1.05]">
-              Five tools.
+              Claude Code.
               <br />
-              <span className="text-accent">Complete control.</span>
+              <span className="text-accent">Every tool.</span>
             </h2>
             <p className="text-zinc-400 text-lg leading-relaxed mb-8">
-              The AI operates through five precisely-scoped tools. Each one
-              validates paths, respects file size limits, and stays sandboxed
-              within your workspace. No shell access. No surprises.
+              Shire wraps Claude Code and gives you access to its full toolset —
+              file operations, shell commands, web search, and multi-agent
+              workflows. Nothing held back.
             </p>
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm text-zinc-500">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                512 KB read limit
+                Read, Write, Edit files
               </div>
               <div className="flex items-center gap-3 text-sm text-zinc-500">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                256 KB write limit
+                Bash commands &amp; git operations
               </div>
               <div className="flex items-center gap-3 text-sm text-zinc-500">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                Binary file detection &amp; rejection
+                Web search &amp; web fetch
               </div>
               <div className="flex items-center gap-3 text-sm text-zinc-500">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                Path traversal prevention
+                MCP servers &amp; custom skills
               </div>
             </div>
           </motion.div>
@@ -100,7 +114,7 @@ export function Tools() {
                   <div className="w-3 h-3 rounded-full bg-[#28c840]/80" />
                 </div>
                 <span className="text-[11px] text-zinc-600 font-mono ml-2">
-                  shire tools
+                  claude code tools
                 </span>
               </div>
 
@@ -140,7 +154,7 @@ export function Tools() {
 
                 <div className="pt-3 mt-2 border-t border-edge/50">
                   <span className="text-zinc-600 text-[11px]">
-                    All paths resolved via resolveSandboxed(workspaceRoot)
+                    Powered by Claude Code — plus 20+ more tools
                   </span>
                 </div>
               </div>

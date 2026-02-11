@@ -4,7 +4,7 @@ import {
   FolderOpen,
   MessageSquare,
   Wrench,
-  Zap,
+  Blocks,
   Database,
   FileOutput,
   Monitor,
@@ -24,7 +24,7 @@ const features: Feature[] = [
     icon: FolderOpen,
     title: 'Workspace Management',
     description:
-      'Create and manage workspaces backed by real directories. Each workspace scopes the AI entirely to your project.',
+      'Create and manage workspaces backed by real directories. Each workspace scopes Claude Code entirely to your project.',
     span: 2,
   },
   {
@@ -38,17 +38,17 @@ const features: Feature[] = [
   {
     id: 'tools',
     icon: Wrench,
-    title: 'Five AI Tools',
+    title: 'Full Claude Code Toolset',
     description:
-      'File search, content search, file read, file write, and directory listing — all sandboxed to your workspace.',
+      'Read, Write, Edit, Bash, Glob, Grep, WebSearch, and every other Claude Code tool — right out of the box.',
     span: 1,
   },
   {
     id: 'provider',
-    icon: Zap,
-    title: 'Multi-Provider',
+    icon: Blocks,
+    title: 'Skills & MCP Servers',
     description:
-      'Anthropic, OpenAI, or any compatible endpoint. Run local models via Ollama or LMStudio.',
+      'Works with your existing skills and MCP server configurations. Shire picks them up automatically.',
     span: 1,
   },
   {
@@ -188,8 +188,7 @@ export function Features() {
             transition={{ delay: 0.15, duration: 0.5 }}
             className="text-zinc-500 text-lg max-w-lg mx-auto"
           >
-            Built for developers who want AI assistance without the cloud
-            dependency.
+            Claude Code deserves a native app. Shire gives it one.
           </motion.p>
         </div>
 

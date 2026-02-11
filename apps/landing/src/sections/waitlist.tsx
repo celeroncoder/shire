@@ -1,6 +1,6 @@
-import { useState, Suspense, lazy, useRef, type FormEvent } from 'react'
+import { Suspense, lazy, useRef, useState } from 'react'
 import { motion, useInView } from 'motion/react'
-import { ArrowRight, Check } from 'lucide-react'
+import { Download, Star } from 'lucide-react'
 
 const Dithering = lazy(() =>
   import('@paper-design/shaders-react').then((mod) => ({
@@ -8,20 +8,17 @@ const Dithering = lazy(() =>
   }))
 )
 
+const GITHUB_REPO = 'https://github.com/celeroncoder/shire'
+const DOWNLOAD_URL =
+  'https://github.com/celeroncoder/shire/releases/latest'
+
 export function Waitlist() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    if (email.trim()) setSubmitted(true)
-  }
-
   return (
-    <section id="waitlist" className="py-32 px-6" ref={ref}>
+    <section id="download" className="py-32 px-6" ref={ref}>
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -51,47 +48,31 @@ export function Waitlist() {
 
           <div className="relative z-10 px-8 max-w-2xl mx-auto text-center">
             <h2 className="font-display text-4xl md:text-6xl text-white mb-6">
-              Be the first to try Shire.
+              Try Shire today.
             </h2>
             <p className="text-zinc-400 text-lg mb-10 leading-relaxed">
-              We're building the future of local-first AI coding. Join the
-              waitlist for early access.
+              The native Claude Code experience for macOS. Download the app or
+              star the repo to follow along.
             </p>
 
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4 }}
-                className="inline-flex items-center gap-3 bg-accent/10 border border-accent/20 rounded-full px-8 py-4 text-accent"
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={DOWNLOAD_URL}
+                className="group inline-flex h-14 items-center justify-center gap-3 rounded-full bg-accent px-10 text-base font-medium text-white transition-all duration-300 hover:bg-accent-hover hover:scale-105 active:scale-95 hover:shadow-[0_0_40px_rgba(236,78,2,0.3)]"
               >
-                <Check className="w-5 h-5" />
-                <span className="font-medium">
-                  You're on the list. We'll be in touch.
-                </span>
-              </motion.div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto"
+                <Download className="w-5 h-5" />
+                Download for macOS
+              </a>
+              <a
+                href={GITHUB_REPO}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex h-14 items-center justify-center gap-3 rounded-full border border-edge-light px-8 text-base font-medium text-zinc-300 transition-all duration-300 hover:border-zinc-600 hover:text-white hover:bg-white/5"
               >
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  required
-                  className="w-full h-14 px-6 rounded-full bg-[#09090b] border border-edge-light text-white placeholder:text-zinc-600 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all font-body text-sm"
-                />
-                <button
-                  type="submit"
-                  className="group flex-shrink-0 inline-flex h-14 items-center justify-center gap-2 rounded-full bg-accent px-8 text-base font-medium text-white transition-all duration-300 hover:bg-accent-hover hover:scale-105 active:scale-95 hover:shadow-[0_0_40px_rgba(236,78,2,0.3)] cursor-pointer"
-                >
-                  Join
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-                </button>
-              </form>
-            )}
+                <Star className="w-5 h-5 transition-colors group-hover:text-yellow-400" />
+                Star on GitHub
+              </a>
+            </div>
           </div>
         </div>
       </motion.div>
