@@ -1,6 +1,7 @@
 import { useState, Suspense, lazy } from 'react'
 import { motion } from 'motion/react'
-import { ArrowRight, FolderOpen, FileText } from 'lucide-react'
+// ArrowRight used in commented-out CTA below
+// import { ArrowRight } from 'lucide-react'
 
 const Dithering = lazy(() =>
   import('@paper-design/shaders-react').then((mod) => ({
@@ -14,78 +15,16 @@ function AppMockup() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.9, duration: 0.8, ease: 'easeOut' }}
-      className="mt-16 md:mt-20 max-w-4xl mx-auto w-full px-4"
+      className="mt-16 md:mt-20 max-w-5xl mx-auto w-full px-4"
     >
-      <div className="relative rounded-2xl border border-edge/60 bg-surface/70 backdrop-blur-sm overflow-hidden shadow-2xl shadow-accent/5">
-        {/* Window chrome */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-edge/50">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-[#ff5f57]/80" />
-            <div className="w-3 h-3 rounded-full bg-[#febc2e]/80" />
-            <div className="w-3 h-3 rounded-full bg-[#28c840]/80" />
-          </div>
-          <span className="text-[11px] text-zinc-600 font-mono ml-2">
-            Shire
-          </span>
-        </div>
-
-        {/* App body */}
-        <div className="flex h-56 md:h-72">
-          {/* Sidebar */}
-          <div className="w-44 border-r border-edge/40 p-3 space-y-3 hidden md:block">
-            <div className="text-[10px] text-zinc-600 font-semibold uppercase tracking-wider">
-              Workspaces
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-accent/10 text-[11px] text-accent font-medium">
-                <FolderOpen className="w-3 h-3" /> my-project
-              </div>
-              <div className="pl-5 space-y-0.5">
-                <div className="text-[10px] text-zinc-400 py-1 px-2 rounded bg-accent/5">
-                  Fix auth flow
-                </div>
-                <div className="text-[10px] text-zinc-600 py-1 px-2">
-                  Add API routes
-                </div>
-                <div className="text-[10px] text-zinc-600 py-1 px-2">
-                  Refactor utils
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 px-2 py-1.5 text-[11px] text-zinc-600">
-              <FolderOpen className="w-3 h-3" /> api-server
-            </div>
-          </div>
-
-          {/* Chat area */}
-          <div className="flex-1 p-4 space-y-4 overflow-hidden">
-            <div className="flex justify-end">
-              <div className="bg-accent/10 rounded-2xl rounded-br-sm px-4 py-2.5 text-[11px] text-zinc-300 max-w-[260px]">
-                How do I fix the authentication bug in the login flow?
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="text-[11px] text-zinc-400 max-w-[300px] leading-relaxed">
-                I'll look into the authentication module. Let me check the
-                relevant files...
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[10px] text-zinc-500 font-mono">
-                <FileText className="w-3 h-3 text-accent/60" />
-                Read src/auth/login.ts
-              </div>
-            </div>
-
-            <div className="flex gap-1 items-center pt-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-accent/50 animate-bounce [animation-delay:0ms]" />
-              <div className="w-1.5 h-1.5 rounded-full bg-accent/50 animate-bounce [animation-delay:150ms]" />
-              <div className="w-1.5 h-1.5 rounded-full bg-accent/50 animate-bounce [animation-delay:300ms]" />
-            </div>
-          </div>
-        </div>
-
+      <div className="relative rounded-2xl border border-edge/60 overflow-hidden shadow-2xl shadow-accent/5">
+        <img
+          src="/screenshots/chat.png"
+          alt="Shire — AI-powered chat interface with Claude Code"
+          className="w-full h-auto"
+        />
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#09090b] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#09090b] to-transparent pointer-events-none" />
       </div>
     </motion.div>
   )

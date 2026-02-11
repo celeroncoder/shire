@@ -4,6 +4,16 @@
 
 A native macOS app that turns any folder into an AI-powered workspace, backed by [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
+## Screenshots
+
+| Chat | Workspace |
+|------|-----------|
+| ![Chat interface](screenshots/chat.png) | ![Workspace view](screenshots/workspace.png) |
+
+| Settings — Connection | Settings — Skills |
+|-----------------------|-------------------|
+| ![Connection settings](screenshots/connection.png) | ![Skills settings](screenshots/skills.png) |
+
 ## Prerequisites
 
 1. **Xcode 15+** — install from the Mac App Store
