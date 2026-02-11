@@ -67,12 +67,12 @@ function AppMockup() {
 
             <div className="space-y-2">
               <div className="text-[11px] text-zinc-400 max-w-[300px] leading-relaxed">
-                I'll look into the authentication module. Let me read the
+                I'll look into the authentication module. Let me check the
                 relevant files...
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[10px] text-zinc-500 font-mono">
                 <FileText className="w-3 h-3 text-accent/60" />
-                read_file src/auth/login.ts
+                Read src/auth/login.ts
               </div>
             </div>
 
@@ -141,9 +141,9 @@ export function Hero() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          Point Shire at any directory and chat with an AI that can search,
-          read, and write your files. A coding assistant grounded in your actual
-          project.
+          A native macOS app for Claude Code. All the power of Claude's
+          coding agent with the feel of a real desktop app — workspaces,
+          persistence, and a beautiful native UI.
         </motion.p>
 
         {/*<motion.div

@@ -1,5 +1,7 @@
 # Shire
 
+[![Release](https://github.com/celeroncoder/shire/actions/workflows/release.yml/badge.svg)](https://github.com/celeroncoder/shire/actions/workflows/release.yml)
+
 A native macOS app that turns any folder into an AI-powered workspace, backed by [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
 ## Prerequisites

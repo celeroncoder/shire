@@ -8,7 +8,7 @@ const steps = [
     icon: FolderPlus,
     title: 'Point',
     description:
-      'Select any folder on your machine. Shire creates a workspace scoped entirely to that directory — nothing leaks out.',
+      'Select any folder on your machine. Shire creates a workspace and launches Claude Code scoped entirely to that directory.',
   },
   {
     number: '02',
@@ -22,7 +22,7 @@ const steps = [
     icon: Rocket,
     title: 'Ship',
     description:
-      'The AI writes files directly to disk. Every change is tracked as an artifact you can trace back to the exact message.',
+      'Claude Code writes files directly to disk. Every change is tracked as an artifact you can trace back to the exact message.',
   },
 ]
 
