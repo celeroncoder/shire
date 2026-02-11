@@ -29,6 +29,9 @@ build/
 .vscode/
 .idea/
 
+# Release artifacts
+Shire.zip
+
 # Xcode
 DerivedData/
 *.xcuserdata/
