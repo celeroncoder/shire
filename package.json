@@ -3,16 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "packageManager": "bun@1.3.8",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": ["apps/landing"],
   "scripts": {
-    "dev": "bunx turbo run dev",
-    "build": "bunx turbo run build",
-    "generate": "bunx turbo run generate",
-    "migrate": "bunx turbo run migrate",
-    "clean": "bunx turbo run clean"
-  },
-  "devDependencies": {
-    "turbo": "^2.5.0",
-    "typescript": "^5.8.0"
+    "dev": "bun --filter @shire/landing dev",
+    "build": "bun --filter @shire/landing build"
   }
 }

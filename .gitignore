@@ -10,15 +10,6 @@ build/
 # Turborepo
 .turbo/
 
-# Electron
-release/
-*.dmg
-*.AppImage
-*.exe
-*.snap
-*.deb
-*.rpm
-
 # Database
 *.db
 *.db-journal
@@ -37,3 +28,14 @@ release/
 # IDE
 .vscode/
 .idea/
+
+# Xcode
+DerivedData/
+*.xcuserdata/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
